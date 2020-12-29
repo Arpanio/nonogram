@@ -49,6 +49,11 @@ def backend(r: int, c: int,
         constraint_group = partial(detect_groups, group_details)
         problem.addConstraint(constraint_group, constraint_vars)
         
+        # Constraints to speed-up processing
+        if row_sum == c:
+            # The whole row must be 1's
+            problem.addConstraint(cp.InSetConstraint({1}), constraint_vars)
+        
     for col in range(c):
         constraint_vars = [v for v in variables if re.search(f"_{col}$", v)]
         col_sum = sum(c_num[col])
@@ -61,6 +66,11 @@ def backend(r: int, c: int,
         group_details = c_num[col]
         constraint_group = partial(detect_groups, group_details)
         problem.addConstraint(constraint_group, constraint_vars)
+        
+        # Constraints to speed-up processing
+        if col_sum == r:
+            # The whole column must be 1's
+            problem.addConstraint(cp.InSetConstraint({1}), constraint_vars)
     
     # Solve
     # Convert dict solution into array ToDO
@@ -77,4 +87,12 @@ if __name__ == '__main__':
                              [[1], [2]],
                              [[1], [1], [1]],
                              [(0, 1)]),
+                     indent=2, sort_keys=True))
+    print(json.dumps(backend(10, 10,
+                             [[4], [4], [2], [9], [10], [10], [9], [2], [5], [5]],
+                             [[2], [4], [4], [4, 2], [4, 2], [2, 4, 2], [2, 7], [10], [7], [4]]),
+                     indent=2, sort_keys=True))
+    print(json.dumps(backend(10, 10,
+                             [[5], [3, 1], [3, 1], [1, 2, 1], [10], [9], [3], [3], [3], [3]],
+                             [[2], [2], [2], [2], [2], [10], [10], [3, 6], [1, 2], [6]]),
                      indent=2, sort_keys=True))
