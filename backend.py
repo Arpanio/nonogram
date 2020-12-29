@@ -1,5 +1,6 @@
 import re
 import constraint as cp
+from typing import List, Tuple
 
 
 def detect_groups():
@@ -14,7 +15,7 @@ def contiguity(*args):
         return True
 
 
-def backend(r: int, c: int, r_num: list, c_num: list):
+def backend(r: int, c: int, r_num: List[List[int]], c_num: List[List[int]], crossed_cells: List[Tuple[int, int]] = []):
     # Setup CP problem object
     problem = cp.Problem()
     
