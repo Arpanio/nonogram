@@ -16,14 +16,6 @@ def detect_groups(group_sums, *args):
         return True
 
 
-def contiguity(*args):
-    str_ = "".join([str(a) for a in list(args)])
-    if re.search("10+1", str_):
-        return False
-    else:
-        return True
-
-
 def backend(r: int, c: int,
             r_num: List[List[int]],
             c_num: List[List[int]],
@@ -51,7 +43,6 @@ def backend(r: int, c: int,
         # problem.addConstraint(lambda *args: sum(args) == row_sum, constraint_vars)
         
         problem.addConstraint(cp.ExactSumConstraint(row_sum), constraint_vars)
-        # problem.addConstraint(contiguity, constraint_vars)
         
         # multi-group constraints
         group_details = r_num[row]
@@ -65,23 +56,11 @@ def backend(r: int, c: int,
         # Add constraint to CP object
         # problem.addConstraint(lambda *args: sum(args) == col_sum, constraint_vars)
         problem.addConstraint(cp.ExactSumConstraint(col_sum), constraint_vars)
-        # problem.addConstraint(contiguity, constraint_vars)
 
         # multi-group constraints
         group_details = c_num[col]
         constraint_group = partial(detect_groups, group_details)
         problem.addConstraint(constraint_group, constraint_vars)
-        
-    # Create multi-group constraints
-    # ToDo
-    # for i, r_n in enumerate(r_num):
-    #     if len(r_n) == 1:
-    #         continue
-    #
-    #     constraint_vars = [v for v in variables if re.search(f"_{i}_", v)]
-    #     constraint_value = r_n
-    #     constraint_group = partial(detect_groups, constraint_value)
-    #     problem.addConstraint(constraint_group, constraint_vars)
     
     # Solve
     # Convert dict solution into array ToDO
