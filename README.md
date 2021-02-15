@@ -8,7 +8,7 @@ While simple Nonograms may be solved using brute force, the number of total comb
 
 ### Example of a Nonogram:
 
-![Nonogram from Wikipedia](https://en.wikipedia.org/wiki/Nonogram#/media/File:Nonogram_wiki.svg)
+![Nonogram Example](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Nonogram_wiki.svg/500px-Nonogram_wiki.svg.png "Nonogram example for the letter W")
 
 This repository contains solution using [backtracking](https://en.wikipedia.org/wiki/Backtracking) and [constraint programming](https://en.wikipedia.org/wiki/Constraint_programming) for Nonogram puzzles.
 
